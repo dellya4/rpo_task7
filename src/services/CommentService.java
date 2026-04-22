@@ -1,4 +1,7 @@
-import javax.xml.stream.events.Comment;
+package services;
+
+import database.Database;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -7,9 +10,13 @@ import java.util.List;
 public class CommentService {
     private Database database;
 
+    public CommentService(Database database) {
+        this.database = database;
+    }
+
     public void addComment(String username, String text) throws SQLException {
         String sql = "INSERT INTO comments (username, text) values ('" + username + "','" + text + "')";
-        database.executeQuery(sql);
+        database.update(sql);
     }
 
     public List<String> getComment() throws SQLException {
