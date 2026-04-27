@@ -35,7 +35,10 @@ public class LoginHandler implements HttpHandler {
             if (userService.login(username, password)) {
                 String sessionId = sessionManager.createSession(username, password);
 
-                exchange.getResponseHeaders().add("Set-Cookie", "sessionId=" + sessionId);
+                exchange.getResponseHeaders().add(
+                        "Set-Cookie",
+                        "sessionId=" + sessionId + "; HttpOnly"
+                );
 
                 Utils.send(exchange, "Login success");
             } else {

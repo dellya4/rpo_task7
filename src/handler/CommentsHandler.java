@@ -3,7 +3,6 @@ package handler;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import services.CommentService;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -25,7 +24,7 @@ public class CommentsHandler implements HttpHandler {
             StringBuilder response = new StringBuilder();
 
             for (String c : comments) {
-                response.append(c).append("\n");
+                response.append(Utils.escapeHtml(c)).append("\n");
             }
 
             Utils.send(exchange, response.toString());

@@ -7,7 +7,7 @@ import java.util.UUID;
 public class SessionManager {
     private final Map<String, String> sessions = new HashMap<>();
 
-    public String createSession(String username, String password) {
+    public String createSession(String username) {
         String sessionId = UUID.randomUUID().toString();
         sessions.put(sessionId, username);
         return sessionId;

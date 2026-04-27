@@ -1,7 +1,6 @@
 package handler;
 
 import com.sun.net.httpserver.HttpExchange;
-
 import java.io.*;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -31,6 +30,9 @@ public class Utils {
     }
 
     public static void send(HttpExchange exchange, String response) throws IOException {
+        exchange.getResponseHeaders().add("Content-Security-Policy", "default-src 'self'");
+        exchange.getResponseHeaders().add("X-Frame-Options", "DENY");
+        exchange.getResponseHeaders().add("X-Content-Type-Options", "nosniff");
         exchange.sendResponseHeaders(200, response.getBytes().length);
         OutputStream os = exchange.getResponseBody();
         os.write(response.getBytes());
@@ -47,5 +49,12 @@ public class Utils {
             }
         }
         return null;
+    }
+
+    public static String escapeHtml(String input) {
+        return input
+                .replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;");
     }
 }

@@ -3,7 +3,6 @@ package handler;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import services.UserService;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Map;
