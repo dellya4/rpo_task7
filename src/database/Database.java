@@ -22,4 +22,8 @@ public class Database {
         Statement statement = connection.createStatement();
         statement.executeUpdate(query);
     }
+
+    public PreparedStatement prepare(String sql) throws SQLException {
+        return connection.prepareStatement(sql);
+    }
 }

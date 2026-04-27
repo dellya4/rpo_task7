@@ -2,6 +2,7 @@ package services;
 
 import database.Database;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,8 +16,13 @@ public class CommentService {
     }
 
     public void addComment(String username, String text) throws SQLException {
-        String sql = "INSERT INTO comments (username, text) values ('" + username + "','" + text + "')";
-        database.update(sql);
+        PreparedStatement stmt = database.prepare(
+                "INSERT INTO comments (username, text) VALUES (?, ?)"
+        );
+        stmt.setString(1, username);
+        stmt.setString(2, text);
+
+        stmt.executeUpdate();
     }
 
     public List<String> getComment() throws SQLException {

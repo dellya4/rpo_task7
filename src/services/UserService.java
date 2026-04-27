@@ -3,6 +3,7 @@ package services;
 import database.Database;
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -14,15 +15,28 @@ public class UserService {
     }
 
     public void register(String username, String password) throws SQLException {
+
+        PreparedStatement stmt = database.prepare(
+                "INSERT INTO users1 (username, password) VALUES (?, ?)"
+        );
+
         String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
 
-        String sql = "INSERT INTO users1 (username, password) VALUES ('" + username + "', '" + hashed + "')";
-        database.update(sql);
+        stmt.setString(1, username);
+        stmt.setString(2, hashed);
+
+        stmt.executeUpdate();
     }
 
     public boolean login(String username, String password) throws SQLException {
-        String sql = "SELECT * FROM users1 WHERE username = '" + username + "'";
-        ResultSet rs = database.executeQuery(sql);
+
+        PreparedStatement stmt = database.prepare(
+                "SELECT * FROM users1 WHERE username = ?"
+        );
+
+        stmt.setString(1, username);
+
+        ResultSet rs = stmt.executeQuery();
 
         if (rs.next()) {
             String hash = rs.getString("password");
