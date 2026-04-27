@@ -29,6 +29,9 @@ public class CommentHandler implements HttpHandler {
         String sessionId = Utils.getSessionId(exchange);
         String username = sessionManager.getUser(sessionId);
 
+        System.out.println("sessionId = " + sessionId);
+        System.out.println("username = " + username);
+
         if (username == null) {
             Utils.send(exchange, "Not authenticated");
             return;
