@@ -1,8 +1,8 @@
 Assignment: Building a Secure Web System from Scratch (No Frameworks)
 
-Part 1 — Implementation (Insecure First) - done! 
+**Part 1 — Implementation (Insecure First) - done!** 
 
-Part 2 — Vulnerability Discovery (OWASP Top 10)
+**Part 2 — Vulnerability Discovery (OWASP Top 10)**
 
 1) Injection (SQL Injection)
 In UserService: 
@@ -135,4 +135,61 @@ Any user can view all comments without restriction.
 There is no ownership validation or authorization check.
 
 OWASP: A01 - Broken Access Control
+
+**Part 5 — Apply Security Principles**
+
+1) Least Privilege
+
+Users have only minimal permissions.
+
+They can:
+add their own comments
+view comments
+
+They cannot:
+modify or delete other users' data
+
+This reduces risk of misuse.
+
+2) Defense in Depth
+
+The system has multiple layers of security:
+
+Passwords are hashed using BCrypt
+SQL Injection is prevented using PreparedStatement
+XSS is prevented by escaping output
+Cookies use HttpOnly
+Security headers are added
+
+If one layer fails, others still protect the system.
+
+3) Fail Securely
+
+The system does not expose sensitive information on errors.
+
+For example:
+returns "Error" instead of detailed messages
+does not show stack traces to users
+
+This prevents information leakage.
+
+4) Zero Trust
+
+The system does not trust user input.
+
+All input is treated as unsafe
+PreparedStatement is used
+Output is escaped
+
+Every request is validated.
+
+5) Secure by Design
+
+Security is built into the system from the beginning:
+Passwords are never stored in plain text
+Session-based authentication is used
+Safe database queries are used
+Security headers are implemented
+
+Security was considered during development, not added later.
 
