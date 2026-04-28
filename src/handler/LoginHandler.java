@@ -33,7 +33,7 @@ public class LoginHandler implements HttpHandler {
 
         try {
             if (userService.login(username, password)) {
-                String sessionId = sessionManager.createSession(username, password);
+                String sessionId = sessionManager.createSession(username);
 
                 exchange.getResponseHeaders().add(
                         "Set-Cookie",
